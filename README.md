@@ -58,6 +58,12 @@ questions to put to your host or IT person.
 Search your own logs with the commands in the hunt guide. This package does not ship anything that runs on your
 systems or collects data from them.
 
+## Licence
+
+The text we wrote is licensed under CC BY 4.0 ([LICENSE](LICENSE)). The indicator values and facts belong to the
+research that reported them: they are credited in [CREDITS.md](CREDITS.md), and we do not relicense them. Details
+and how to credit us are in [NOTICE.md](NOTICE.md).
+
 ## Where to go for the full, current picture
 
 Sources keep updating. For lists longer than we reproduce, and for detection rules (which carry their own licences),
