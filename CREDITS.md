@@ -8,7 +8,9 @@ publishing.** Each indicator in `iocs/iocs.csv` names the source it came from. B
 them reviewed, tested or endorsed this package.
 
 We copy facts (indicator values and figures) with attribution, and link to everything else. Where a source publishes
-a longer list than we reproduce, follow the link for the full, current version.
+a longer list than we reproduce, follow the link for the full, current version. Where a publisher's terms limit reuse
+to personal or non-commercial use, we do not copy its indicator values at all; we link to it below. Where a publisher
+asks that links go to its home page only, we link the home page.
 
 ## Discovery and official guidance
 
@@ -22,18 +24,14 @@ a longer list than we reproduce, follow the link for the full, current version.
 
 | Who | What we used | Link |
 |---|---|---|
-| **VulnCheck** (Canary Intelligence) | Scanner and exploitation-attempt IPs, User-Agents, boundary, session and file markers, upload hashes, timeline | https://www.vulncheck.com/blog/php2shell-vulnerabilities |
 | **Arctic Wolf Labs** | Payload host and URLs, Potassium hashes and domains, scanner markers, request shapes, User-Agent | https://arcticwolf.com/resources/blog/php2shell-critical-php-vulnerabilities-enable-unauthenticated-remote-code-execution |
-| **Sophos Counter Threat Unit** | Source IP, payload host and URL, file path and command, hashes, Potassium C2 addresses and domains, boundary and User-Agent | https://www.sophos.com/en-us/blog/proof-of-concept-exploit-released-for-php-vulnerabilities-109618-109619 |
-| **Amazon Threat Intelligence** (AWS Security Blog) | The earliest known exploitation attempt (2026-10-17) and six source IPs | https://aws.amazon.com/blogs/security/amazon-threat-intelligence-identifies-php2shell-exploitation-prior-to-public-disclosure-in-madpot |
+| **Sophos Counter Threat Unit**: blog post on the released proof-of-concept exploit (Sophos asks for links to its home page only, so find the post from there) | Source IP, payload host and URL, file path and command, hashes, Potassium C2 addresses and domains, boundary and User-Agent | https://www.sophos.com/ |
 | **SOCRadar Threat Intelligence Unit** | Attacker staging server, ports, probe filename and session prefixes | https://socradar.io/blog/php2shell-exploit-tooling-attacker-server |
 | **Hunt.io** | Scanner network, payload and botnet hosts, C2 domain families, staging servers, a scanner fingerprint | https://hunt.io/blog/php2shell-cve-2026-109618-109619-open-directories |
 | **F5 Labs** | Exploit-request patterns, User-Agents, markers, body sizes | https://www.f5.com/labs/articles/php2shell-exploitation-attempts-observed |
 | **Fastly** | Boundary-based hunting advice, the look-alike campaigns to rule out, early-activity timeline | https://www.fastly.com/blog/how-fastly-detected-and-built-a-coordinated-response-to-php2shell |
 | **KELA** | Fingerprints from the public PoC lineage, boundary prefix, markers, underground context | https://www.kelacyber.com/blog/php2shell-underground-response |
-| **Datadog Security Labs** | Log lines, process and response-header behaviours, request-shape detection guidance, mitigations | https://securitylabs.datadoghq.com/articles/php2shell-critical-vulnerabilities-in-php |
 | **Sansec** | Affected-application context, the response-cookie memory-disclosure behaviour | https://sansec.io/research/php2shell |
-| **Huntress** | A pre-disclosure incident marker | https://www.huntress.com/blog/php2shell-leaked-critical-php-vulnerabilities |
 
 ## Further indicators and detections published by others (linked, not reproduced)
 
@@ -45,7 +43,18 @@ These are longer, still changing, or carry their own licences. Follow the links.
   current version: https://arcticwolf.com/resources/blog/php2shell-critical-php-vulnerabilities-enable-unauthenticated-remote-code-execution
 - **Wordfence** publishes a list of attacking IP addresses and further request markers (we could not open the page to
   read it ourselves): https://www.wordfence.com/blog/2026/10/attacks-on-php2shell-continue-but-no-known-compromises-as-a-result-yet
-- **Sophos** lists its firewall, endpoint and XDR countermeasure IDs on its page (see the Sophos link above).
+- **VulnCheck** (Canary Intelligence) published the scanner and exploitation-attempt addresses, User-Agents, markers and
+  upload hashes it saw on its canary hosts. Its terms allow personal, non-commercial use, so we link and do not copy:
+  https://www.vulncheck.com/blog/php2shell-vulnerabilities
+- **Amazon Threat Intelligence** (AWS Security Blog) published the earliest known exploitation attempt (2026-10-17)
+  and the source addresses it saw on its honeypots. AWS allows personal use only and asks for links to its home page
+  only, so we link and do not copy; look for the post from there: https://aws.amazon.com/
+- **Datadog Security Labs** published log lines, process and response-header behaviours and request-shape guidance. Its
+  terms allow personal, non-commercial use, so we link and do not copy:
+  https://securitylabs.datadoghq.com/articles/php2shell-critical-vulnerabilities-in-php
+- **Huntress** wrote up a pre-disclosure incident with its own markers. Its terms allow personal, non-commercial use,
+  so we link and do not copy: https://www.huntress.com/blog/php2shell-leaked-critical-php-vulnerabilities
+- **Sophos** lists its firewall, endpoint and XDR countermeasure IDs on its page (see the Sophos entry above).
 - **CISA** links a SIGMA detection rule from its alert (see the CISA link above).
 - **Abstract Security** publishes Snort rules for the request patterns: https://www.abstract.security/blog/php2shell-critical-php-rce-vulnerabilities-cve-2026-109618-and-cve-2026-109619
 - **Elastic**, **CrowdStrike** and **Recorded Future** publish detection coverage:

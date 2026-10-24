@@ -14,8 +14,8 @@ anything for you.
 
 ## 0. Set your window
 
-- Start no later than **2026-10-17**. Amazon reported the earliest known attempt on that date, four days before the
-  fix (iocs `PS-0026`).
+- Start no later than **2026-10-17**. Amazon Threat Intelligence reported the earliest known attempt on that date,
+  four days before the fix (linked in [CREDITS.md](../CREDITS.md)).
 - Most scanning was reported from **2026-10-21** onward.
 - If your logs begin after that, say so in your notes: you cannot rule anything out for the earlier period.
 
@@ -37,8 +37,8 @@ The commands below search what an ordinary access log holds. Replace the paths w
 User-Agent and URL markers (case-insensitive):
 
 ```
-grep -i -E 'php2shell|/php2shell-probe-|php://filter' /var/log/nginx/access.log
-zgrep -i -E 'php2shell|/php2shell-probe-|php://filter' /var/log/nginx/access.log.*.gz
+grep -i 'php2shell' /var/log/nginx/access.log
+zgrep -i 'php2shell' /var/log/nginx/access.log.*.gz
 ```
 
 The published IP addresses. Extract the `ip` rows of `iocs/iocs.csv`, then search with them:
@@ -50,8 +50,7 @@ grep -F -f php2shell-ips.txt /var/log/nginx/access.log
 
 How to read an IP match:
 
-- Several addresses are **shared anonymisation, VPN or hosting infrastructure** (Amazon says so about its six).
-  Investigate; do not simply block.
+- Several addresses are **shared anonymisation, VPN or hosting infrastructure**. Investigate; do not simply block.
 - IP addresses are reassigned. Check the dates in the `notes` column and `review_by`.
 - Fastly's advice: be careful with blocklists, because blocking VPN exits, Tor exits or mobile addresses hurts real
   users.
@@ -69,22 +68,21 @@ that use the out-of-memory technique, do not use it at all.
 
 ## 3. Server logs: is there sign it worked?
 
-Datadog, KELA and Fastly describe these server-side traces. None is conclusive alone.
+Hunt.io, KELA and Fastly describe these server-side traces. None is conclusive alone.
 
-**PHP and web server error logs.** A fatal "Allowed memory size ... exhausted" that ends with `in Unknown on line 0`
-means PHP failed while reading the request, before any script ran:
+**PHP and web server error logs.** Hunt.io reports bursts of PHP out-of-memory errors in PHP-FPM logs from 21 October,
+and Fastly suggests checking Apache's error log for worker crashes:
 
 ```
-grep -E 'Allowed memory size of [0-9]+ bytes exhausted.* in Unknown on line 0' /var/log/php8.3-fpm.log
-grep -E 'AH00052|AH00051' /var/log/apache2/error.log
+grep -E 'Allowed memory size of [0-9]+ bytes exhausted' /var/log/php8.3-fpm.log
+grep -E 'AH00051' /var/log/apache2/error.log
 ```
 
-A short burst of two to four of these on one worker, alongside oversized multipart requests, is worth a closer look.
-Legitimate workloads can also run out of memory. Datadog notes that a successful attack may not crash the worker and
-may return an ordinary HTTP 200.
+A short burst on one worker, alongside oversized multipart requests, is worth a closer look. Legitimate workloads can
+also run out of memory, and a clean error log is not proof of safety.
 
 **What the web server started.** The most direct evidence of success is a web worker (`apache2`, `httpd`, `php-fpm`,
-`php-cgi`, `lsphp`) starting a shell or a download tool. CISA, Datadog, Sophos and KELA all point to this. If you
+`php-cgi`, `lsphp`) starting a shell or a download tool. CISA, Sophos and KELA all point to this. If you
 have process auditing, search it. A quick look at the current state:
 
 ```
@@ -102,10 +100,10 @@ administrator accounts. For PHP files changed since the earliest attempt:
 find /var/www -name '*.php' -type f -newermt 2026-10-17
 ```
 
-**Response cookies.** Datadog describes the memory-disclosure stage returning heap contents in an unusually long,
-percent-encoded or binary `Set-Cookie: PHPSESSID=` value. Valid session IDs are not limited to hex characters, so
-compare with what your application normally sets. Sansec notes the leaked memory can contain passwords, session tokens,
-API keys and TLS private keys.
+**Response cookies.** Sansec describes the memory-disclosure stage leaking process memory through the response cookie,
+so an unusually long or unreadable `Set-Cookie: PHPSESSID=` value is worth a look. Valid session IDs are not limited to
+hex characters, so compare with what your application normally sets. Sansec notes the leaked memory can contain
+passwords, session tokens, API keys and TLS private keys.
 
 ## 4. What the results mean
 
@@ -131,7 +129,7 @@ Preserve first, clean later:
 The fix is a patched PHP, not an application update: **8.5.12, 8.4.27, 8.3.36 or 8.2.35**, or your operating system,
 panel or hosting provider's patched package for older branches (a patched package can keep the old version number, so
 read the package changelog for the CVE). After updating, **restart every PHP worker** (and Apache for `mod_php`) so the
-old code stops running. Datadog and KELA both stress the restart. PHP says updating is the only complete fix;
+old code stops running. KELA stresses the restart. PHP says updating is the only complete fix;
 the temporary measures it lists reduce exposure but do not make an unpatched server safe.
 
 ## Detections you can use (linked, not reproduced)
@@ -149,6 +147,8 @@ questions to ask your host, read
 
 ## Sources for this guide
 
-Fastly (look-alikes, boundary advice), Datadog Security Labs (server-side traces, request shapes), KELA (fingerprints),
-Sophos (dropped file and command), Amazon Threat Intelligence (earliest attempt), Sansec (memory disclosure, update
-advice), CISA, and Sucuri. Full links are in [CREDITS.md](../CREDITS.md).
+Fastly (look-alikes, boundary advice, Apache worker crashes), Hunt.io (out-of-memory bursts), KELA (fingerprints),
+Sophos (dropped file and command), Sansec (memory disclosure, update advice), CISA, and Sucuri. Amazon Threat
+Intelligence (earliest attempt) is cited for that date only. VulnCheck, Datadog Security Labs and Huntress also
+published detailed findings; their terms limit reuse, so we link to them and do not copy. Full links are in
+[CREDITS.md](../CREDITS.md).
