@@ -13,7 +13,7 @@ This repository collects the **indicators that security researchers have publish
 searching your own logs for them.
 
 **Not technical? Start with the plain-language version:**
-[PHP2Shell: What to Ask Whoever Runs Your Website](https://blog.bansalai.com/news/php2shell-website-owner-questions/)
+[PHP2Shell: What to Ask Whoever Runs Your Website](https://blog.bansalai.com/news/php2shell-website-owner-questions/?ref=github)
 on the SOC-Lite blog. It covers WordPress, WooCommerce, cPanel hosting and installed business software, and gives five
 questions to put to your host or IT person.
 
@@ -72,6 +72,6 @@ follow the links in [CREDITS.md](CREDITS.md).
 ## Help with a suspected compromise
 
 If something in your logs looks real, preserve the logs first, isolate the server, and call your host or IT provider.
-[SOC-Lite by BansalAI](https://cyber.bansalai.com/) helps small and mid-sized Central Florida businesses review
-alerts and work with their IT person or MSP. [Book a free 20-minute visibility check](https://cyber.bansalai.com/#book).
-More plain-language security write-ups are on the [SOC-Lite blog](https://blog.bansalai.com/).
+[SOC-Lite by BansalAI](https://cyber.bansalai.com/?ref=github) helps small and mid-sized Central Florida businesses review
+alerts and work with their IT person or MSP. [Book a free 20-minute visibility check](https://cyber.bansalai.com/?ref=github#book).
+More plain-language security write-ups are on the [SOC-Lite blog](https://blog.bansalai.com/?ref=github).

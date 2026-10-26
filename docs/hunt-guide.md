@@ -140,10 +140,10 @@ endpoint signatures, CISA's SIGMA rule, Abstract Security's Snort rules, and Ela
 ## Not sure what you found?
 
 Bring the log lines to your host or IT person first. If you want a second pair of eyes,
-[SOC-Lite by BansalAI](https://cyber.bansalai.com/) offers a free 20-minute
-[visibility check](https://cyber.bansalai.com/#book). For the business-owner version of this page, with the five
+[SOC-Lite by BansalAI](https://cyber.bansalai.com/?ref=github) offers a free 20-minute
+[visibility check](https://cyber.bansalai.com/?ref=github#book). For the business-owner version of this page, with the five
 questions to ask your host, read
-[PHP2Shell: What to Ask Whoever Runs Your Website](https://blog.bansalai.com/news/php2shell-website-owner-questions/).
+[PHP2Shell: What to Ask Whoever Runs Your Website](https://blog.bansalai.com/news/php2shell-website-owner-questions/?ref=github).
 
 ## Sources for this guide
 
