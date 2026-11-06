@@ -30,7 +30,7 @@ questions to put to your host or IT person.
 
 **Rows:** 31 · **verified (two or more sources):** 5 · **single source:** 26
 
-These counts match [`iocs/iocs.csv`](iocs/iocs.csv); a test checks them every time we change the file. Every value
+These counts match [`iocs/iocs.csv`](iocs/iocs.csv); we check them every time we change the file (a test checks them in our private working copy). Every value
 was read on the source's own page, never from a news summary or a search snippet. The full list of what we took from
 each source, and the exact wording, is in [CREDITS.md](CREDITS.md).
 
@@ -68,7 +68,7 @@ Elastic, CrowdStrike and Recorded Future also publish detection coverage. Those 
 ### Used for context only (no rows)
 
 The PHP project's advisories (CVE numbers, fixed versions), CISA's alert, and Sansec's write-up (which applications
-are affected). Links are in [CREDITS.md](CREDITS.md).
+are affected, and the memory leak in the response cookie). Links are in [CREDITS.md](CREDITS.md).
 
 ## Read the results carefully
 
@@ -89,10 +89,10 @@ are affected). Links are in [CREDITS.md](CREDITS.md).
 |---|---|
 | `id` | Stable row ID (`PS-nnnn`) |
 | `wave` | Always `php2shell` in this release |
-| `type` | `ip`, `ip-port`, `cidr`, `user-agent`, `multipart-boundary`, `param`, `string`, `filename`, `session-id`, `content-length`, `uri-pattern`, `header`, `log-line`, `behaviour`, `command`, `file-path`, `url`, `domain`, `sha256`, `sha1`, `md5`, `ja4h` |
+| `type` | `ip`, `ip-port`, `cidr`, `user-agent`, `multipart-boundary`, `string`, `filename`, `session-id`, `log-line`, `behaviour`, `domain`, `ja4h` |
 | `value` | The indicator. URLs and addresses are written as normal text, not defanged. Never open them in a browser |
 | `match` | `exact`, `substring`, `prefix`, `regex` or `wildcard` |
-| `evidence` | Where it would show: `access-log`, `request-header`, `request-body`, `response-header`, `response-body`, `error-log`, `process`, `file` or `network` |
+| `evidence` | Where it would show: `access-log`, `request-header`, `request-body`, `response-body`, `error-log` or `network` |
 | `fragile` | `yes` if the attacker can change it trivially |
 | `verified` | `yes` only when two independent primary sources report it. `no` means a single source |
 | `source_url`, `source_date` | Where we took it from and the date of that source |

@@ -1,8 +1,5 @@
 # Credits and sources
 
-<!-- DRAFT 2026-10-24. Public file. Before publishing, check every entry against docs/research/source-licences.md,
-     and check that every source_url in iocs/iocs.csv appears below (publish gate, tests/test_iocs.py). -->
-
 This package is aggregated from public research by the organisations and people below. **We thank them for
 publishing.** Each indicator in `iocs/iocs.csv` names the source it came from. Being listed here does not mean any of
 them reviewed, tested or endorsed this package.

@@ -1,6 +1,6 @@
 # Disclaimer
 
-**As of 2026-10-24.**
+**As of 2026-10-24 (source terms re-checked 2026-11-05).**
 
 This package is aggregated from public sources, listed in [CREDITS.md](CREDITS.md). Please read this before using it.
 

@@ -41,12 +41,15 @@ grep -i 'php2shell' /var/log/nginx/access.log
 zgrep -i 'php2shell' /var/log/nginx/access.log.*.gz
 ```
 
-The published IP addresses. Extract the `ip` rows of `iocs/iocs.csv`, then search with them:
+The published IP addresses. Extract the `ip` and `ip-port` rows of `iocs/iocs.csv` (the port is dropped), then search
+with them. `-w` stops an address matching inside a longer one, such as `192.0.2.16` inside `192.0.2.160`:
 
 ```
-awk -F, '$3=="ip"{print $4}' iocs/iocs.csv > php2shell-ips.txt
-grep -F -f php2shell-ips.txt /var/log/nginx/access.log
+awk -F, '$3=="ip" || $3=="ip-port" {split($4, a, ":"); print a[1]}' iocs/iocs.csv > php2shell-ips.txt
+grep -w -F -f php2shell-ips.txt /var/log/nginx/access.log
 ```
+
+The `cidr` row is a whole network, not one address. Check it by hand against your own traffic first.
 
 How to read an IP match:
 
@@ -63,8 +66,8 @@ grep -F 'B7kQpoc619' /path/to/waf-or-proxy.log
 grep -E 'PHP_SESSION_UPLOAD_PROGRESS' /path/to/waf-or-proxy.log
 ```
 
-`PHP_SESSION_UPLOAD_PROGRESS` is a real PHP feature, enabled by default. Applications that report upload progress send
-it legitimately. It is only interesting on endpoints that do not handle uploads. Many PHP2Shell tools, notably those
+`PHP_SESSION_UPLOAD_PROGRESS` (KELA lists it as a lead) is a real PHP feature, enabled by default. Applications that
+report upload progress send it legitimately. It is only interesting on endpoints that do not handle uploads. Many PHP2Shell tools, notably those
 that use the out-of-memory technique, do not use it at all.
 
 ## 3. Server logs: is there sign it worked?
@@ -72,7 +75,8 @@ that use the out-of-memory technique, do not use it at all.
 Hunt.io, KELA and Fastly describe these server-side traces. None is conclusive alone.
 
 **PHP and web server error logs.** Hunt.io reports bursts of PHP out-of-memory errors in PHP-FPM logs from 21 October,
-and Fastly suggests checking Apache's error log for worker crashes:
+and Fastly suggests checking Apache's error log for worker crashes. The first line below is PHP's own standard
+out-of-memory message; the second is the Apache worker-crash code Fastly names:
 
 ```
 grep -E 'Allowed memory size of [0-9]+ bytes exhausted' /var/log/php8.3-fpm.log
@@ -82,9 +86,9 @@ grep -E 'AH00051' /var/log/apache2/error.log
 A short burst on one worker, alongside oversized multipart requests, is worth a closer look. Legitimate workloads can
 also run out of memory, and a clean error log is not proof of safety.
 
-**What the web server started.** The most direct evidence of success is a web worker (`apache2`, `httpd`, `php-fpm`,
-`php-cgi`, `lsphp`) starting a shell or a download tool. CISA and KELA point to this. If you
-have process auditing, search it. A quick look at the current state:
+**What the web server started.** The most direct evidence of success is a web worker starting a shell or a download
+tool. KELA names `php-fpm`, `php-cgi`, `httpd` and `apache2` as the processes to watch, and CISA points the same way.
+If you have process auditing, search it. A quick look at the current state:
 
 ```
 ps -eo pid,ppid,user,etime,args --forest
@@ -101,17 +105,17 @@ administrator accounts. For PHP files changed since the earliest attempt:
 find /var/www -name '*.php' -type f -newermt 2026-10-17
 ```
 
-**Response cookies.** Sansec describes the memory-disclosure stage leaking process memory through the response cookie,
-so an unusually long or unreadable `Set-Cookie: PHPSESSID=` value is worth a look. Valid session IDs are not limited to
-hex characters, so compare with what your application normally sets. Sansec notes the leaked memory can contain
-passwords, session tokens, API keys and TLS private keys.
+**Response cookies.** Sansec describes the memory-disclosure stage returning freed process memory to the client inside
+the `PHPSESSID` response cookie, so compare the cookie values your server sent with what your application normally
+sets. Valid session IDs are not limited to hex characters, so a different-looking value is a reason to look, not proof.
+Sansec notes the leaked memory can contain passwords, session tokens, API keys and TLS private keys.
 
 ## 4. What the results mean
 
 | You found | It suggests | Next step |
 |---|---|---|
 | A User-Agent, boundary or IP hit in access logs, no server-side trace | You were probed. Many are scanners, some defenders' | Confirm PHP is patched and workers restarted. Keep the logs |
-| Memory-exhausted errors at `Unknown on line 0` with matching oversized requests | An attempt reached PHP's request parsing | Same. Check the process and file items below |
+| Memory-exhausted errors with matching oversized requests | An attempt reached PHP's request parsing | Same. Check the process and file items in section 3 |
 | A shell or download tool started by a web worker, a new file in the web root, an unexpected scheduled task or admin account, or an unexplained outbound connection | Possible compromise | Treat as an incident |
 | Nothing | Not proof of safety: these indicators change quickly and your logs may not record what matters | Patch anyway |
 
@@ -148,7 +152,8 @@ questions to ask your host, read
 
 ## Sources for this guide
 
-Fastly (look-alikes, boundary advice, Apache worker crashes), Hunt.io (out-of-memory bursts), KELA (fingerprints),
-Sansec (memory disclosure, update advice), CISA, and Sucuri. Amazon Threat Intelligence (earliest attempt) is cited
+Fastly (look-alikes, boundary advice, Apache worker crashes), Hunt.io (out-of-memory bursts), KELA (fingerprints, the
+upload-progress field, the processes to watch, files and tasks, the restart advice), Sansec (memory disclosure in the
+response cookie, update advice), CISA, and Sucuri. Amazon Threat Intelligence (earliest attempt) is cited
 for that date only. Sophos, F5 Labs, VulnCheck, Datadog Security Labs and Huntress also published detailed findings;
 their terms limit reuse, so we link to them and do not copy. Full links are in [CREDITS.md](../CREDITS.md).
