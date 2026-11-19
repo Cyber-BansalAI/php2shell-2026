@@ -1,7 +1,7 @@
 # PHP2Shell (CVE-2026-109618, CVE-2026-109619): indicators and log-hunting guide
 
 > **Read first.** This package is aggregated from public sources by SOC-Lite by BansalAI. We have not tested it, it
-> comes with no warranty, and it is not professional advice. It is as of **2026-10-24** (source terms re-checked 2026-11-05) and will go stale. See
+> comes with no warranty, and it is not professional advice. It is as of **2026-10-24** (source terms re-checked 2026-11-05; the researchers' address rows re-read 2026-11-19) and will go stale. See
 > [DISCLAIMER.md](DISCLAIMER.md). We are not affiliated with the PHP project or any organisation credited in
 > [CREDITS.md](CREDITS.md), and none of them reviewed or endorsed this package.
 
