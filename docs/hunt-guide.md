@@ -1,6 +1,6 @@
 # Hunt guide: was my server probed, and is there sign it worked?
 
-As of **2026-10-24** (source terms re-checked 2026-11-05). Read [DISCLAIMER.md](../DISCLAIMER.md) first. We have not tested these commands on your systems.
+As of **2026-10-24** (source terms re-checked 2026-11-05; exploitation status updated 2026-11-19). Read [DISCLAIMER.md](../DISCLAIMER.md) first. We have not tested these commands on your systems.
 Run them yourself, on a copy of the logs if you can, and adjust paths to your setup. Nothing in this package runs
 anything for you.
 
@@ -9,8 +9,9 @@ anything for you.
 1. *Was this server probed?* Answered mostly from web, WAF or proxy logs. Researchers report that probing is
    widespread. A hit tells you someone, possibly a defender's scanner, sent a request.
 2. *Is there sign it worked?* Answered from the server itself: PHP and web server error logs, the processes web workers
-   started, new files and outbound connections. As of 2026-10-23 researchers reported no confirmed successful
-   compromise, but they also say a successful attempt can look like a failed one from outside.
+   started, new files and outbound connections. On 2026-10-26 CISA added both flaws to its Known Exploited
+   Vulnerabilities catalog, so treat a server that was not updated promptly as one that may have been hit. Researchers
+   also say a successful attempt can look like a failed one from outside.
 
 ## 0. Set your window
 

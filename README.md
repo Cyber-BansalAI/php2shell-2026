@@ -1,7 +1,7 @@
 # PHP2Shell (CVE-2026-109618, CVE-2026-109619): indicators and log-hunting guide
 
 > **Read first.** This package is aggregated from public sources by SOC-Lite by BansalAI. We have not tested it, it
-> comes with no warranty, and it is not professional advice. It is as of **2026-10-24** (source terms re-checked 2026-11-05; the researchers' address rows re-read 2026-11-19) and will go stale. See
+> comes with no warranty, and it is not professional advice. It is as of **2026-10-24** (source terms re-checked 2026-11-05; the researchers' address rows re-read 2026-11-19; exploitation status updated 2026-11-19) and will go stale. See
 > [DISCLAIMER.md](DISCLAIMER.md). We are not affiliated with the PHP project or any organisation credited in
 > [CREDITS.md](CREDITS.md), and none of them reviewed or endorsed this package.
 
@@ -72,8 +72,9 @@ are affected, and the memory leak in the response cookie). Links are in [CREDITS
 
 ## Read the results carefully
 
-- **An indicator hit shows you were probed, not that you were compromised.** As of 2026-10-23, researchers reported
-  widespread exploitation attempts and no confirmed successful compromise. That can change quickly.
+- **An indicator hit shows you were probed, not that you were compromised.** Researchers reported
+  widespread exploitation attempts, and on 2026-10-26 CISA added both flaws to its Known Exploited Vulnerabilities
+  catalog. Treat a hit on a server that was not updated promptly as a reason to check it now.
 - **Most of these indicators are cheap for an attacker to change.** User-Agent strings, multipart boundaries and
   markers belong to specific tools. Tool names changed within hours of disclosure. A clean result is not an all-clear.
 - **Many hits will be defenders.** Researchers report that roughly a third of PHP2Shell-named scanning traffic
