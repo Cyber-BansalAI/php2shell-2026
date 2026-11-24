@@ -15,7 +15,7 @@ home page.
 | Who | What we used | Link |
 |---|---|---|
 | **Calif** (Ryan Austin), **Wiz Research** (Sagi Tzadik, Shir Tamari, Nir Ohfeld, Tomer Schwartz) and **OpenAI**: found and reported the vulnerabilities, as credited by Sansec | The discovery credit | https://sansec.io/research/php2shell |
-| **PHP project / PHP security team**: advisories GHSA-w8hw-w9fx-j79w (CVE-2026-109618) and GHSA-6wmf-4rv5-p3rp (CVE-2026-109619), fixed releases | CVE IDs, fixed versions 8.5.12, 8.4.27, 8.3.36 and 8.2.35, affected deployment models | https://www.php.net/news.php |
+| **PHP project / PHP security team**: advisories GHSA-w8hw-w9fx-j79w (CVE-2026-109618) and GHSA-6wmf-4rv5-p3rp (CVE-2026-109619), fixed releases | CVE IDs, fixed versions 8.5.12, 8.4.27, 8.3.36 and 8.2.35, affected deployment models; the 2026-11-19 security releases (8.5.13, 8.4.28, 8.3.37, 8.2.36 and 8.6.0), the note that the most severe issues in them need a non-default or unusual setup, and the 2026-12-31 end of security fixes for PHP 8.2 | https://www.php.net/news.php |
 | **CISA**: alert "Critical Vulnerabilities in PHP Require Immediate Patching" (updated 2026-10-26) | Affected deployment models, and the addition of both flaws to its Known Exploited Vulnerabilities catalog on 2026-10-26 | https://www.cisa.gov/news-events/alerts/2026/10/21/critical-vulnerabilities-php-require-immediate-patching |
 
 ## Research and incident reports (indicators)

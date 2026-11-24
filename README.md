@@ -1,7 +1,7 @@
 # PHP2Shell (CVE-2026-109618, CVE-2026-109619): indicators and log-hunting guide
 
 > **Read first.** This package is aggregated from public sources by SOC-Lite by BansalAI. We have not tested it, it
-> comes with no warranty, and it is not professional advice. It is as of **2026-10-24** (source terms re-checked 2026-11-05; the researchers' address rows re-read 2026-11-19; exploitation status updated 2026-11-19) and will go stale. See
+> comes with no warranty, and it is not professional advice. It is as of **2026-10-24** (source terms re-checked 2026-11-05; the researchers' address rows re-read 2026-11-19; exploitation status updated 2026-11-19; fixed versions updated 2026-11-24) and will go stale. See
 > [DISCLAIMER.md](DISCLAIMER.md). We are not affiliated with the PHP project or any organisation credited in
 > [CREDITS.md](CREDITS.md), and none of them reviewed or endorsed this package.
 
@@ -81,8 +81,11 @@ are affected, and the memory leak in the response cookie). Links are in [CREDITS
   labels itself as a defensive check. Your own vendors' scanners may appear.
 - **Do not mass-block addresses.** Several published addresses are shared anonymisation, VPN or hosting infrastructure
   that also carries ordinary traffic. Investigate matches first.
-- **The fix is the update.** Patched PHP is 8.5.12, 8.4.27, 8.3.36 or 8.2.35, or your operating system or panel
-  vendor's patched package (which may keep the old version number). Restart PHP workers afterwards.
+- **The fix is the update.** The 2026-10-21 releases (8.5.12, 8.4.27, 8.3.36 and 8.2.35) fixed the two PHP2Shell flaws.
+  On 2026-11-19 PHP released further security fixes, **8.5.13, 8.4.28, 8.3.37, 8.2.36 and 8.6.0**, which are now the latest;
+  PHP says the most severe problems in that release need a non-default setting or an unusual setup. Use the newer versions
+  or your operating system or panel vendor's patched package (which may keep the old version number). Restart PHP workers
+  afterwards.
 
 ## Using `iocs.csv`
 

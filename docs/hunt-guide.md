@@ -1,6 +1,6 @@
 # Hunt guide: was my server probed, and is there sign it worked?
 
-As of **2026-10-24** (source terms re-checked 2026-11-05; exploitation status updated 2026-11-19). Read [DISCLAIMER.md](../DISCLAIMER.md) first. We have not tested these commands on your systems.
+As of **2026-10-24** (source terms re-checked 2026-11-05; exploitation status updated 2026-11-19; fixed versions updated 2026-11-24). Read [DISCLAIMER.md](../DISCLAIMER.md) first. We have not tested these commands on your systems.
 Run them yourself, on a copy of the logs if you can, and adjust paths to your setup. Nothing in this package runs
 anything for you.
 
@@ -132,9 +132,12 @@ Preserve first, clean later:
 
 ## 6. Patch and restart
 
-The fix is a patched PHP, not an application update: **8.5.12, 8.4.27, 8.3.36 or 8.2.35**, or your operating system,
-panel or hosting provider's patched package for older branches (a patched package can keep the old version number, so
-read the package changelog for the CVE). After updating, **restart every PHP worker** (and Apache for `mod_php`) so the
+The fix is a patched PHP, not an application update. The two PHP2Shell flaws were fixed on 2026-10-21 in **8.5.12, 8.4.27,
+8.3.36 and 8.2.35**. PHP released further security fixes on 2026-11-19 (**8.5.13, 8.4.28, 8.3.37, 8.2.36 and 8.6.0**), which
+are now the latest. PHP says the most severe problems in that release need a non-default setting or an unusual setup, so
+being on the October versions is not the same as being current. Use the newest version, or your operating system, panel or
+hosting provider's patched package for older branches (a patched package can keep the old version number, so read the
+package changelog for the CVE). PHP 8.2 stops getting security fixes on 2026-12-31. After updating, **restart every PHP worker** (and Apache for `mod_php`) so the
 old code stops running. KELA stresses the restart. PHP says updating is the only complete fix;
 the temporary measures it lists reduce exposure but do not make an unpatched server safe.
 
